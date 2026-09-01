@@ -142,11 +142,11 @@ export function WebShieldPage({ token, onOpenPolicy, helpers }: WebShieldPagePro
         <MetricCard title="Cross-Origin Alerts" value={fmtNum(overview?.cross_origin_alerts)} subtitle={`${fmtNum(overview?.contaminated_outputs)} contaminated outputs`} tone="warn" />
       </div>
 
-      <div className="card">
+      <div className="card" style={{ background: 'linear-gradient(135deg, rgba(20,20,20,0.85), rgba(10,10,10,0.95)), url("/static/app/webshield_hero.jpg") center/cover no-repeat', border: '1px solid var(--border-color)', boxShadow: '0 8px 32px rgba(0,0,0,0.5)' }}>
         <div className="sectionHeader sectionHeader--tight">
           <div>
-            <div className="eyebrow">Varden Web Shield</div>
-            <h3>Browser WebMCP tool surface</h3>
+            <div className="eyebrow" style={{ color: 'var(--brand-accent)' }}>Varden Web Shield</div>
+            <h3 style={{ textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>Browser WebMCP tool surface</h3>
           </div>
           <div className="toggleRow">
             {(['inventory', 'approvals', 'sessions'] as Tab[]).map((value) => (

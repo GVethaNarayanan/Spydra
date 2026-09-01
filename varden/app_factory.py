@@ -1205,6 +1205,43 @@ def create_app(config: AppConfig) -> FastAPI:
         record = require(x_api_key, authorization, "viewer", scope="write")
         return {"scenarios": run_demo_scenarios(record["tenant_id"]), "dashboard": dashboard_bootstrap_payload(record["tenant_id"])}
 
+    @app.post("/demo/sandbox")
+    def demo_sandbox(payload: dict, x_api_key: str | None = Header(default=None), authorization: str | None = Header(default=None)):
+        record = require(x_api_key, authorization, "viewer", scope="write")
+        text = payload.get("text", "")
+        if not text:
+            raise HTTPException(status_code=400, detail="Missing 'text' in payload")
+            
+        try:
+            from .openai_mod import evaluate_custom_prompt
+            scenario = evaluate_custom_prompt(text)
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
+            
+        action, decision = evaluate_action(scenario["payload"], scenario["raw"], record["tenant_id"])
+        
+        if "forced_decision" in scenario:
+            decision.action = scenario["forced_decision"]
+            decision.reason = scenario["forced_reason"]
+            decision.matched_rule = {"id": "sandbox-live", "name": "Interactive Sandbox"}
+            
+        status = status_from_decision(decision.action)
+        event_id = persist_event(
+            action=action, 
+            decision=decision, 
+            status=status, 
+            input_payload=scenario["raw"], 
+            replay_key=action.tool, 
+            error=f"[Varden BLOCKED] {decision.reason}" if status == "blocked" else None
+        )
+        
+        return {
+            "status": status,
+            "reason": decision.reason,
+            "event_id": event_id,
+            "confidence": scenario.get("confidence", 0.0)
+        }
+
     register_webshield_routes(app, require=require, webshield_store=webshield_store, idem=idem)
     register_provenance_routes(app, require=require, provenance_store=provenance_store, event_store=event_store)
     register_runtime_routes(

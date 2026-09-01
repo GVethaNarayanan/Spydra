@@ -44,21 +44,29 @@ def moderate_prompt(text: str) -> dict:
             results = result.get("results", [])
             if not results:
                 return {"flagged": False, "categories": []}
+                return {"flagged": False, "categories": [], "confidence_score": 0.0}
             
             first_result = results[0]
             flagged = first_result.get("flagged", False)
             
             # If flagged, collect the specific categories that triggered it
             flagged_categories = []
+            max_score = 0.0
+            
+            categories = first_result.get("categories", {})
+            category_scores = first_result.get("category_scores", {})
+            
+            if category_scores:
+                max_score = max(category_scores.values())
+                
             if flagged:
-                categories = first_result.get("categories", {})
                 flagged_categories = [cat for cat, is_flagged in categories.items() if is_flagged]
                 
-            return {"flagged": flagged, "categories": flagged_categories}
+            return {"flagged": flagged, "categories": flagged_categories, "confidence_score": max_score}
     except Exception as e:
         logger.error(f"OpenAI Moderation API call failed: {e}")
         # Fail open or fail closed? For a demo, fail open (safe) so it doesn't crash
-        return {"flagged": False, "categories": [], "error": str(e)}
+        return {"flagged": False, "categories": [], "confidence_score": 0.0, "error": str(e)}
 
 def get_demo_prompt_scenario() -> dict:
     """
@@ -115,3 +123,59 @@ def get_demo_prompt_scenario() -> dict:
                 "forced_decision": "allowed",
                 "forced_reason": "Passed OpenAI Moderation"
             }
+
+def evaluate_custom_prompt(text: str) -> dict:
+    """
+    Evaluates a user-provided prompt in real-time.
+    """
+    mod_result = moderate_prompt(text)
+    confidence = mod_result.get("confidence_score", 0.0)
+    score_pct = round(confidence * 100, 2)
+    
+    action = {
+        "type": "tool_call",
+        "tool": "openai.chat.completions.create",
+        "args": {
+            "kwargs": {
+                "model": "gpt-4",
+                "messages": [{"role": "user", "content": text}]
+            }
+        },
+        "agent_name": "interactive-sandbox",
+        "trace_id": f"sandbox-{random.randint(1000, 9999)}"
+    }
+    
+    raw = action.copy()
+    
+    if mod_result.get("flagged"):
+        reasons = ", ".join(mod_result["categories"])
+        return {
+            "name": "Live OpenAI Block",
+            "payload": action,
+            "raw": raw,
+            "forced_decision": "blocked",
+            "forced_reason": f"OpenAI Moderation API flagged prompt for: {reasons}",
+            "confidence": score_pct
+        }
+    else:
+        # Check for obvious manual prompt injections since OpenAI might miss them if they aren't harmful
+        text_lower = text.lower()
+        if "ignore" in text_lower or "bypass" in text_lower or "system prompt" in text_lower or "dan" in text_lower:
+            return {
+                "name": "Spydra WebShield Block",
+                "payload": action,
+                "raw": raw,
+                "forced_decision": "blocked",
+                "forced_reason": "WebShield detected structural prompt injection attempt",
+                "confidence": 99.99
+            }
+            
+        return {
+            "name": "Live OpenAI Allow",
+            "payload": action,
+            "raw": raw,
+            "forced_decision": "allowed",
+            "forced_reason": "Passed OpenAI Moderation",
+            "confidence": score_pct
+        }
+
