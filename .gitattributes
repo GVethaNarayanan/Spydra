@@ -1,0 +1,4 @@
+* text=auto eol=lf
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+varden/web/app/assets/* linguist-generated=true

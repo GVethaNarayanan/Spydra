@@ -1,0 +1,641 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500&family=Outfit:wght@400;500;600;700&display=swap");
+
+/* ═══════════════════════════════════════════════════════════════
+   SPYDRA DESIGN SYSTEM — "The web that watches"
+   Dark silk, golden threads, venomous accents
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  --bg: #06050a;
+  --panel: rgba(14, 11, 18, 0.88);
+  --panel-strong: rgba(10, 8, 14, 0.96);
+  --line: rgba(232, 195, 106, 0.14);
+  --text: #f4efe4;
+  --muted: #a89b86;
+  --accent: #e8c36a;
+  --accent-2: #d4a017;
+  --danger: #e44552;
+  --warn: #e8a54b;
+  --ok: #7dcea0;
+  --monitor: #9b8ae8;
+  --shadow: 0 28px 70px rgba(0, 0, 0, 0.55);
+
+  /* Silk thread gradient */
+  --silk-gradient: linear-gradient(90deg, transparent, rgba(232,195,106,0.35), transparent);
+  --silk-gradient-v: linear-gradient(180deg, transparent, rgba(232,195,106,0.25), transparent);
+
+  /* Web pattern */
+  --web-bg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M30 0L30 60M0 30L60 30M0 0L60 60M60 0L0 60' stroke='rgba(232,195,106,0.04)' stroke-width='0.3' fill='none'/%3E%3C/svg%3E");
+}
+
+body {
+  font-family: Outfit, ui-sans-serif, system-ui, sans-serif;
+  background:
+    radial-gradient(ellipse at 50% -10%, rgba(232, 195, 106, 0.10), transparent 46%),
+    radial-gradient(circle at 100% 0%, rgba(90, 20, 28, 0.22), transparent 36%),
+    radial-gradient(circle at 0% 100%, rgba(155, 138, 232, 0.08), transparent 40%),
+    linear-gradient(180deg, #0e0a12 0%, #06050a 42%, #030305 100%);
+  background-attachment: fixed;
+}
+
+h1, h2, h3, .brand__title, .silkGate__title {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  letter-spacing: -0.02em;
+}
+
+/* ——— Shell background blobs ——— */
+.shell__bg--one { background: rgba(232, 195, 106, 0.14); }
+.shell__bg--two { background: rgba(155, 100, 50, 0.12); }
+
+/* ——— Active nav ——— */
+.nav__item.is-active {
+  background: linear-gradient(135deg, rgba(232, 195, 106, 0.18), rgba(180, 40, 50, 0.12));
+  border-color: rgba(232, 195, 106, 0.4);
+  box-shadow: 0 0 20px rgba(232, 195, 106, 0.06), inset 0 0 12px rgba(232, 195, 106, 0.04);
+}
+.nav__item {
+  transition: all 0.25s ease;
+}
+.nav__item:hover:not(.is-active) {
+  border-color: rgba(232, 195, 106, 0.2);
+  background: rgba(232, 195, 106, 0.05);
+  transform: translateX(3px);
+}
+
+/* ——— Buttons ——— */
+.button, .segmented {
+  border-color: rgba(232, 195, 106, 0.28);
+  background: linear-gradient(135deg, rgba(232, 195, 106, 0.18), rgba(80, 20, 24, 0.14));
+  transition: all 0.2s ease;
+}
+.button:hover, .segmented:hover {
+  border-color: rgba(232, 195, 106, 0.45);
+  box-shadow: 0 4px 16px rgba(232, 195, 106, 0.12);
+  transform: translateY(-1px);
+}
+
+/* ——— Cards — glassmorphism + web texture ——— */
+.card {
+  background-image:
+    var(--web-bg),
+    linear-gradient(180deg, rgba(255,255,255,0.025), transparent 40%),
+    radial-gradient(circle at 0 0, rgba(232, 195, 106, 0.04), transparent 42%);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(232, 195, 106, 0.1);
+  transition: all 0.3s ease;
+  animation: cardAppear 0.4s ease both;
+}
+.card:hover {
+  border-color: rgba(232, 195, 106, 0.2);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3), 0 0 16px rgba(232,195,106,0.04);
+}
+
+@keyframes cardAppear {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Stagger cards */
+.card:nth-child(1) { animation-delay: 0s; }
+.card:nth-child(2) { animation-delay: 0.06s; }
+.card:nth-child(3) { animation-delay: 0.12s; }
+.card:nth-child(4) { animation-delay: 0.18s; }
+.card:nth-child(5) { animation-delay: 0.24s; }
+.card:nth-child(6) { animation-delay: 0.30s; }
+
+/* ——— Silk thread separators ——— */
+.sidebar__section::before {
+  content: '';
+  display: block;
+  height: 1px;
+  background: var(--silk-gradient);
+  margin-bottom: 14px;
+}
+.sidebar__section:first-of-type::before { display: none; }
+
+/* ——— Custom scrollbar — silk thread ——— */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(232, 195, 106, 0.04);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(232, 195, 106, 0.3), rgba(232, 195, 106, 0.12));
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(232, 195, 106, 0.5), rgba(232, 195, 106, 0.2));
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(232, 195, 106, 0.2) rgba(232, 195, 106, 0.04);
+}
+
+/* ——— Status badge glow effects ——— */
+.badge[data-tone="danger"], .statusPill.is-danger {
+  box-shadow: 0 0 8px rgba(228, 69, 82, 0.3);
+}
+.badge[data-tone="warn"], .statusPill.is-warn {
+  box-shadow: 0 0 8px rgba(232, 165, 75, 0.3);
+}
+.badge[data-tone="ok"], .statusPill.is-ok {
+  box-shadow: 0 0 8px rgba(125, 206, 160, 0.2);
+}
+
+/* ——— Topbar silk border ——— */
+.topbar::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 5%;
+  right: 5%;
+  height: 1px;
+  background: var(--silk-gradient);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SILKGATE — Cinematic entry screen
+   ═══════════════════════════════════════════════════════════ */
+.silkGate {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  background: #030305;
+  overflow: hidden;
+  animation: silkFadeIn 0.7s ease both;
+}
+.silkGate__vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 38%, transparent 0%, rgba(0,0,0,0.5) 60%, #000 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+.silkGate__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+.silkGate__web {
+  position: absolute;
+  inset: -8%;
+  width: 116%;
+  height: 116%;
+  opacity: 0.4;
+  z-index: 1;
+}
+.silkGate__strands line,
+.silkGate__ring {
+  stroke: rgba(232, 195, 106, 0.3);
+  stroke-width: 0.15;
+  fill: none;
+  stroke-dasharray: 180;
+  stroke-dashoffset: 180;
+  animation: silkDraw 2.8s ease forwards;
+}
+.silkGate__ring { animation-delay: 0.25s; }
+
+/* Spider hanging from thread */
+.silkGate__spiderWrap {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: spiderDrop 1.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  z-index: 3;
+}
+.silkGate__thread {
+  width: 1px;
+  height: 100px;
+  background: linear-gradient(180deg, transparent, rgba(232, 195, 106, 0.6), #e8c36a);
+  box-shadow: 0 0 12px rgba(232, 195, 106, 0.4);
+}
+.silkGate__spider {
+  width: 100px;
+  height: 100px;
+  transform-origin: 50% 0;
+  animation: spiderSway 3.4s ease-in-out infinite;
+  filter: drop-shadow(0 10px 24px rgba(0,0,0,0.7)) drop-shadow(0 0 8px rgba(232,195,106,0.15));
+}
+
+/* Spider eye glow */
+.spiderEye {
+  animation: eyePulse 2.5s ease-in-out infinite;
+}
+.spiderEyeGlow {
+  animation: eyeGlowPulse 2.5s ease-in-out infinite;
+}
+@keyframes eyePulse {
+  0%, 100% { fill: #f4e3b0; }
+  50% { fill: #ffe4a0; filter: drop-shadow(0 0 4px rgba(232,195,106,0.6)); }
+}
+@keyframes eyeGlowPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.7; stroke: rgba(232,195,106,0.6); }
+}
+
+/* Spider legs subtle twitch on gate */
+.silkGate .spiderLeg {
+  animation: legTwitch 4s ease-in-out infinite;
+}
+@keyframes legTwitch {
+  0%, 100% { stroke-dashoffset: 0; }
+  50% { stroke-dashoffset: 1; }
+}
+
+/* Copy area */
+.silkGate__copy {
+  position: relative;
+  z-index: 4;
+  text-align: center;
+  max-width: 680px;
+  padding: 170px 24px 40px;
+}
+.silkGate__kicker {
+  color: var(--accent);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 700;
+  margin: 0 0 12px;
+  animation: fadeUp 0.8s ease 0.5s both;
+}
+.silkGate__title {
+  font-size: clamp(68px, 13vw, 120px);
+  line-height: 0.84;
+  margin: 0;
+  font-weight: 700;
+  color: #f7edd4;
+  text-shadow:
+    0 0 60px rgba(232,195,106,0.2),
+    0 20px 60px rgba(0,0,0,0.6);
+  animation: titleReveal 1s ease 0.3s both;
+}
+.silkGate__tag {
+  margin: 20px 0 14px;
+  font-size: 24px;
+  font-style: italic;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  color: #e8c36a;
+  animation: fadeUp 0.8s ease 0.7s both;
+}
+.silkGate__lede {
+  margin: 0 auto 32px;
+  max-width: 540px;
+  color: var(--muted);
+  line-height: 1.65;
+  animation: fadeUp 0.8s ease 0.9s both;
+}
+
+/* Enter button */
+.silkGate__enter {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid rgba(232, 195, 106, 0.55);
+  background: linear-gradient(180deg, #e8c36a, #b8860b);
+  color: #1a1408;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 18px 42px;
+  border-radius: 999px;
+  font-size: 14px;
+  box-shadow:
+    0 16px 40px rgba(232, 195, 106, 0.25),
+    0 0 0 0 rgba(232, 195, 106, 0);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  animation: fadeUp 0.8s ease 1.1s both, buttonGlow 3s ease-in-out infinite 2s;
+  position: relative;
+  overflow: hidden;
+}
+.silkGate__enter::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(232,195,106,0.6), rgba(180,134,11,0.3), rgba(232,195,106,0.6));
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.silkGate__enter:hover:not(:disabled)::before { opacity: 1; }
+.silkGate__enter:hover:not(:disabled) {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow:
+    0 24px 56px rgba(232, 195, 106, 0.35),
+    0 0 30px rgba(232, 195, 106, 0.15);
+}
+.silkGate__enter:active:not(:disabled) {
+  transform: translateY(-1px) scale(0.99);
+}
+.silkGate__enter:disabled { opacity: 0.75; cursor: progress; }
+.silkGate__enterIcon { font-size: 18px; }
+.silkGate__hint {
+  margin: 18px 0 0;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #5e5648;
+  animation: fadeUp 0.8s ease 1.3s both;
+}
+
+@keyframes buttonGlow {
+  0%, 100% { box-shadow: 0 16px 40px rgba(232, 195, 106, 0.25), 0 0 0 0 rgba(232, 195, 106, 0); }
+  50% { box-shadow: 0 16px 40px rgba(232, 195, 106, 0.25), 0 0 24px rgba(232, 195, 106, 0.2); }
+}
+
+/* Burst effect on enter */
+.silkGate__burst {
+  position: absolute;
+  inset: -20%;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(232,195,106,0.4) 0%, transparent 42%);
+  opacity: 0;
+  transform: scale(0.2);
+  z-index: 5;
+}
+
+/* Edge strand decorations */
+.silkGate__edgeStrands {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+.silkGate__edgeSvg {
+  position: absolute;
+  width: min(220px, 22vw);
+  height: min(220px, 22vw);
+  opacity: 0;
+  animation: fadeIn 1.5s ease 1s both;
+}
+.silkGate__edgeSvg--tl { top: 0; left: 0; }
+.silkGate__edgeSvg--br { bottom: 0; right: 0; }
+
+/* ——— Gate exit transitions ——— */
+.silkGate.is-entering .silkGate__web {
+  animation: webExpand 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+.silkGate.is-entering .silkGate__canvas {
+  animation: canvasFade 0.8s ease forwards;
+}
+.silkGate.is-entering .silkGate__burst {
+  animation: burstOut 1.2s ease forwards;
+}
+.silkGate.is-entering .silkGate__copy {
+  animation: copyOut 0.5s ease forwards;
+}
+.silkGate.is-entering .silkGate__spiderWrap {
+  animation: spiderDive 0.7s ease forwards;
+}
+.silkGate.is-entering .silkGate__edgeStrands {
+  animation: edgesOut 0.5s ease forwards;
+}
+.silkGate.is-entering {
+  animation: gateLeave 1.3s ease 0.05s forwards;
+}
+
+@keyframes silkFadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes silkDraw { to { stroke-dashoffset: 0; } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes titleReveal {
+  from { opacity: 0; transform: translateY(24px) scale(0.96); letter-spacing: 0.1em; }
+  to { opacity: 1; transform: translateY(0) scale(1); letter-spacing: -0.02em; }
+}
+@keyframes spiderDrop {
+  from { transform: translateX(-50%) translateY(-150px); opacity: 0; }
+  60% { transform: translateX(-50%) translateY(8px); opacity: 1; }
+  80% { transform: translateX(-50%) translateY(-4px); }
+  to { transform: translateX(-50%) translateY(0); opacity: 1; }
+}
+@keyframes spiderSway {
+  0%, 100% { transform: rotate(-6deg); }
+  50% { transform: rotate(6deg); }
+}
+@keyframes webExpand {
+  to { transform: scale(2.8) rotate(15deg); opacity: 0; }
+}
+@keyframes canvasFade { to { opacity: 0; } }
+@keyframes burstOut {
+  30% { opacity: 1; }
+  to { opacity: 0; transform: scale(2); }
+}
+@keyframes copyOut { to { opacity: 0; transform: translateY(16px); } }
+@keyframes spiderDive { to { transform: translateX(-50%) translateY(45vh); opacity: 0; } }
+@keyframes edgesOut { to { opacity: 0; } }
+@keyframes gateLeave {
+  to { opacity: 0; visibility: hidden; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PERSISTENT ATMOSPHERE
+   ═══════════════════════════════════════════════════════════ */
+.webAtmos {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Hanging spider */
+.webAtmos__hanger {
+  pointer-events: auto;
+  position: absolute;
+  top: 0;
+  right: 7%;
+  background: none;
+  border: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 6;
+  transition: transform 0.3s ease;
+}
+.webAtmos__hanger:hover {
+  transform: scale(1.08);
+}
+.webAtmos__silk {
+  width: 1px;
+  height: 58px;
+  background: linear-gradient(180deg, transparent, rgba(232,195,106,0.5), #e8c36a);
+  box-shadow: 0 0 6px rgba(232,195,106,0.3);
+}
+.webAtmos__spider {
+  width: 44px;
+  height: 44px;
+  transform-origin: 50% 0;
+  animation: spiderSway 4s ease-in-out infinite;
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.5));
+  transition: filter 0.3s ease;
+}
+.webAtmos__hanger:hover .webAtmos__spider {
+  animation-duration: 1.2s;
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.5)) drop-shadow(0 0 6px rgba(232,195,106,0.3));
+}
+.webAtmos__tooltip {
+  position: absolute;
+  bottom: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.webAtmos__hanger:hover .webAtmos__tooltip {
+  opacity: 1;
+}
+
+/* ——— Branding silk ——— */
+.brand__icon {
+  background: radial-gradient(circle at 30% 20%, rgba(232,195,106,.2), rgba(80,16,20,.2) 70%, transparent);
+  box-shadow: 0 18px 42px rgba(232, 195, 106, 0.18);
+  transition: box-shadow 0.3s ease;
+}
+.brand__icon--svg {
+  width: 78px;
+  height: 78px;
+  border-radius: 22px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 30% 20%, rgba(232,195,106,.15), rgba(14,10,18,0.95) 70%);
+  border: 1px solid rgba(232, 195, 106, 0.15);
+  box-shadow: 0 18px 42px rgba(232, 195, 106, 0.18);
+}
+.brand__icon--svg svg {
+  width: 54px;
+  height: 54px;
+}
+.brand:hover .brand__icon--svg {
+  box-shadow: 0 18px 42px rgba(232, 195, 106, 0.28);
+  border-color: rgba(232, 195, 106, 0.25);
+}
+.brand:hover .brand__icon {
+  box-shadow: 0 18px 42px rgba(232, 195, 106, 0.28);
+}
+.brand__pulse {
+  background: var(--accent);
+  box-shadow: 0 0 0 6px rgba(232, 195, 106, 0.12), 0 0 14px rgba(232, 195, 106, 0.55);
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 6px rgba(232, 195, 106, 0.12), 0 0 14px rgba(232, 195, 106, 0.55); }
+  50% { box-shadow: 0 0 0 8px rgba(232, 195, 106, 0.2), 0 0 22px rgba(232, 195, 106, 0.7); }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   WEB LOADING SPINNER
+   ═══════════════════════════════════════════════════════════ */
+.webSpinner {
+  display: inline-flex;
+  animation: spinnerRotate 3s linear infinite;
+}
+.webSpinner__svg { display: block; }
+.webSpinner__spoke {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+  animation: silkDraw 1.2s ease forwards;
+}
+.webSpinner__ring {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: silkDraw 1.5s ease forwards;
+}
+.webSpinner__center {
+  animation: eyePulse 1.5s ease-in-out infinite;
+}
+@keyframes spinnerRotate {
+  to { transform: rotate(360deg); }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MICRO-INTERACTIONS
+   ═══════════════════════════════════════════════════════════ */
+
+/* Table row hover glow */
+.eventRow:hover, .ruleRow:hover, tr:hover {
+  background: rgba(232, 195, 106, 0.03) !important;
+}
+
+/* Banner entrance */
+.banner {
+  animation: bannerSlide 0.4s ease both;
+}
+@keyframes bannerSlide {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Chip hover lift */
+.chip {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.chip:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+}
+
+/* Status pill animated border */
+.statusPill {
+  position: relative;
+  overflow: hidden;
+}
+.statusPill::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--silk-gradient);
+  opacity: 0.5;
+}
+
+/* Sidebar agent select enhancement */
+.sidebarAgentSelect__menu {
+  animation: menuDrop 0.25s ease both;
+}
+@keyframes menuDrop {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Input focus silk border */
+.input:focus {
+  border-color: rgba(232, 195, 106, 0.5) !important;
+  box-shadow: 0 0 0 2px rgba(232, 195, 106, 0.1), 0 0 12px rgba(232, 195, 106, 0.05);
+}
+
+/* ——— Reduced motion ——— */
+@media (prefers-reduced-motion: reduce) {
+  .silkGate__spider, .webAtmos__spider, .silkGate__strands line, .silkGate__ring,
+  .spiderEye, .spiderEyeGlow, .brand__pulse, .webSpinner,
+  .card, .banner, .chip, .sidebarAgentSelect__menu {
+    animation: none !important;
+  }
+  .nav__item, .button, .segmented, .chip, .card, .webAtmos__hanger {
+    transition: none !important;
+  }
+}

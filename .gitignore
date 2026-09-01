@@ -1,0 +1,58 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+.coverage
+htmlcov/
+.cache/
+.git
+
+# Virtual envs
+.venv/
+venv/
+env/
+
+# Packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# JVM / Java SDK
+*.class
+sdks/java/target/
+
+# Local runtime state / demo DBs
+policy.json
+*.db
+*.sqlite
+*.sqlite3
+*.log
+.env
+.env.local
+.varden*/
+.varden-*.db
+.varden-*-demo*.db
+.visual-qa/
+varden_alerts.jsonl
+
+# Node / frontend
+frontend/node_modules/
+sdks/js/web-shield/node_modules/
+frontend/dist/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+frontend/package-lock.json
+TODO-OSS.md
+
+.pypirc
