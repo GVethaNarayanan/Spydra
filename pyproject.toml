@@ -31,7 +31,7 @@ classifiers = [
 dependencies = [
   "fastapi>=0.111",
   "uvicorn>=0.30",
-  "httpx>=0.27",
+  "httpx>=0.28.1",
   "PyJWT>=2.8",
   "requests>=2.31",
 ]
@@ -46,7 +46,7 @@ langchain = [
 ]
 mcp = [
   "mcp[cli]>=1.2,<3",
-  "httpx>=0.27",
+  "httpx>=0.28.1",
 ]
 test = [
   "pytest>=8",
