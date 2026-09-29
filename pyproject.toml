@@ -41,7 +41,7 @@ postgres = [
   "psycopg[binary]>=3.1",
 ]
 langchain = [
-  "langchain>=0.2",
+  "langchain>=1.4.2",
   "langchain-core>=0.2",
 ]
 mcp = [
@@ -56,7 +56,7 @@ test = [
 ]
 all = [
   "psycopg[binary]>=3.1",
-  "langchain>=0.2",
+  "langchain>=1.4.2",
   "langchain-core>=0.2",
   "mcp[cli]>=1.2,<3",
 ]
